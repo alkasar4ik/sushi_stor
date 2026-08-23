@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}
+Корзина | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="cart-page">
+
+    <h1>🛒 Твоя корзина</h1>
+
+    {% if orders %}
+
+        <div class="cart-list">
+
+            {% for order in orders %}
+
+            <div class="cart-item">
+
+                <img
+                    src="{{ url_for('static', filename='images/' + order.product.image) }}"
+                    alt="{{ order.product.name }}"
+                >
+
+                <div class="cart-info">
+
+                    <h2>
+                        {{ order.product.name }}
+                    </h2>
+
+                    <p>
+                        {{ order.product.description }}
+                    </p>
+
+                    <span class="cart-price">
+                        {{ order.product.price }} грн
+                    </span>
+
+                    <span>
+                        Кількість: {{ order.quantity }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- ПІДСУМОК -->
+
+        <div class="cart-total">
+
+            <div class="total-text">
+                Загальна сума:
+            </div>
+
+            <div class="total-price">
+                {{ total }} грн
+            </div>
+
+            <a href="{{ url_for('payment') }}"
+               class="payment-button">
+                Оплатити
+            </a>
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-cart">
+
+            <h2>
+                Корзина порожня 🌸
+            </h2>
+
+            <p>
+                Додай щось смачненьке з меню!
+            </p>
+
+            <a href="{{ url_for('menu') }}">
+                Перейти до меню
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

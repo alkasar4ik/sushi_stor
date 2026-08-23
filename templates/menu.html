@@ -1,0 +1,895 @@
+{% extends "base.html" %}
+
+{% block title %}
+Меню | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="menu-page">
+
+    <h1>Sakura House 🌸</h1>
+
+    <p class="menu-subtitle">
+        Японська кухня з любов'ю
+    </p>
+
+
+    <!-- КАТЕГОРІЇ -->
+
+    <div class="menu-categories">
+
+        <button class="category-btn active"
+                onclick="filterMenu('all', this)">
+            Все
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('sushi', this)">
+            Суші
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('sets', this)">
+            Сети
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('ramen', this)">
+            Рамен
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('main', this)">
+            Основні
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('snacks', this)">
+            Закуски
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('drinks', this)">
+            Напої
+        </button>
+
+    </div>
+
+
+    <!-- ТОВАРИ -->
+
+    <div class="products-grid">
+
+
+        <!-- ================= СУШІ ================= -->
+
+        <div class="product-card" data-category="sushi">
+
+            <img src="{{ url_for('static', filename='images/sakura_roll.jpg') }}"
+                 alt="Sakura Roll">
+
+            <div class="product-info">
+
+                <h3>Sakura Roll</h3>
+
+                <p>
+                    Лосось, вершковий сир, пелюстки сакури
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        185 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="1">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sushi">
+
+            <img src="{{ url_for('static', filename='images/tokyo_roll.jpg') }}"
+                 alt="Tokyo Roll">
+
+            <div class="product-info">
+
+                <h3>Tokyo Roll</h3>
+
+                <p>
+                    Лосось, огірок, сир, ікра
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        210 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="2">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sushi">
+
+            <img src="{{ url_for('static', filename='images/dragon_roll.jpg') }}"
+                 alt="Dragon Roll">
+
+            <div class="product-info">
+
+                <h3>Dragon Roll</h3>
+
+                <p>
+                    Вугор, авокадо, соус унагі
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        245 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="3">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sushi">
+
+            <img src="{{ url_for('static', filename='images/california.jpg') }}"
+                 alt="California">
+
+            <div class="product-info">
+
+                <h3>California</h3>
+
+                <p>
+                    Краб, авокадо, огірок, кунжут
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        175 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="4">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sushi">
+
+            <img src="{{ url_for('static', filename='images/spicy_tuna.jpg') }}"
+                 alt="Spicy Tuna">
+
+            <div class="product-info">
+
+                <h3>Spicy Tuna</h3>
+
+                <p>
+                    Тунець, огірок, гострий соус
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        195 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="5">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= СЕТИ ================= -->
+
+        <div class="product-card" data-category="sets">
+
+            <img src="{{ url_for('static', filename='images/sakura_set.jpg') }}"
+                 alt="Sakura Set">
+
+            <div class="product-info">
+
+                <h3>Sakura Set</h3>
+
+                <p>
+                    24 шматочки, 3 види ролів
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        490 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="6">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sets">
+
+            <img src="{{ url_for('static', filename='images/tokyo_set.jpg') }}"
+                 alt="Tokyo Set">
+
+            <div class="product-info">
+
+                <h3>Tokyo Set</h3>
+
+                <p>
+                    32 шматочки, роли та суші
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        650 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="7">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sets">
+
+            <img src="{{ url_for('static', filename='images/samurai_set.jpg') }}"
+                 alt="Samurai Set">
+
+            <div class="product-info">
+
+                <h3>Samurai Set</h3>
+
+                <p>
+                    40 шматочків, 5 видів ролів
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        790 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="8">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="sets">
+
+            <img src="{{ url_for('static', filename='images/family_set.jpg') }}"
+                 alt="Family Set">
+
+            <div class="product-info">
+
+                <h3>Family Set</h3>
+
+                <p>
+                    56 шматочків для великої компанії
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        1050 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="9">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= РАМЕН ================= -->
+
+        <div class="product-card" data-category="ramen">
+
+            <img src="{{ url_for('static', filename='images/tokyo_ramen.jpg') }}"
+                 alt="Tokyo Ramen">
+
+            <div class="product-info">
+
+                <h3>Tokyo Ramen</h3>
+
+                <p>
+                    Свинина, яйце, локшина, норі
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        220 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="10">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="ramen">
+
+            <img src="{{ url_for('static', filename='images/miso_ramen.jpg') }}"
+                 alt="Miso Ramen">
+
+            <div class="product-info">
+
+                <h3>Miso Ramen</h3>
+
+                <p>
+                    Місо-бульйон, курка, кукурудза
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        205 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="11">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="ramen">
+
+            <img src="{{ url_for('static', filename='images/spicy_ramen.jpg') }}"
+                 alt="Spicy Ramen">
+
+            <div class="product-info">
+
+                <h3>Spicy Ramen</h3>
+
+                <p>
+                    Гострий бульйон, курка, овочі
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        215 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="12">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ОСНОВНІ ================= -->
+
+        <div class="product-card" data-category="main">
+
+            <img src="{{ url_for('static', filename='images/teriyaki.jpg') }}"
+                 alt="Teriyaki Chicken">
+
+            <div class="product-info">
+
+                <h3>Teriyaki Chicken</h3>
+
+                <p>
+                    Курка в соусі теріякі та рис
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        190 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="13">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="main">
+
+            <img src="{{ url_for('static', filename='images/katsu.jpg') }}"
+                 alt="Chicken Katsu">
+
+            <div class="product-info">
+
+                <h3>Chicken Katsu</h3>
+
+                <p>
+                    Хрустка курка, рис та соус
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        210 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="14">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="main">
+
+            <img src="{{ url_for('static', filename='images/yakisoba.jpg') }}"
+                 alt="Yakisoba">
+
+            <div class="product-info">
+
+                <h3>Yakisoba</h3>
+
+                <p>
+                    Смажена локшина з овочами
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        175 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="15">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ЗАКУСКИ ================= -->
+
+        <div class="product-card" data-category="snacks">
+
+            <img src="{{ url_for('static', filename='images/gyoza.jpg') }}"
+                 alt="Gyoza">
+
+            <div class="product-info">
+
+                <h3>Gyoza</h3>
+
+                <p>
+                    Японські пельмені з куркою
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        150 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="16">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="snacks">
+
+            <img src="{{ url_for('static', filename='images/e.jpg') }}"
+                 alt="Ebi Tempura">
+
+            <div class="product-info">
+
+                <h3>Ebi Tempura</h3>
+
+                <p>
+                    Креветки в хрусткій темпурі
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        220 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="17">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="snacks">
+
+            <img src="{{ url_for('static', filename='images/3.jpg') }}"
+                 alt="Edamame">
+
+            <div class="product-info">
+
+                <h3>Edamame</h3>
+
+                <p>
+                    Соєві боби з морською сіллю
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        95 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="18">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= НАПОЇ ================= -->
+
+        <div class="product-card" data-category="drinks">
+
+            <img src="{{ url_for('static', filename='images/m.jpg') }}"
+                 alt="Matcha Latte">
+
+            <div class="product-info">
+
+                <h3>Matcha Latte</h3>
+
+                <p>
+                    Японський зелений чай з молоком
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        110 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="19">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-card" data-category="drinks">
+
+            <img src="{{ url_for('static', filename='images/w.jpg') }}"
+                 alt="Ramune">
+
+            <div class="product-info">
+
+                <h3>Ramune</h3>
+
+                <p>
+                    Японська газована вода
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        95 грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input type="hidden"
+                               name="product_id"
+                               value="20">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function filterMenu(category, button) {
+
+    const products = document.querySelectorAll(".product-card");
+    const buttons = document.querySelectorAll(".category-btn");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    products.forEach(product => {
+
+        if (
+            category === "all" ||
+            product.dataset.category === category
+        ) {
+
+            product.style.display = "block";
+
+        } else {
+
+            product.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

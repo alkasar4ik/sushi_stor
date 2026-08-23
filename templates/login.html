@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Вхід | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="register-page">
+
+    <div class="register-card">
+
+        <h1>Вхід 🌸</h1>
+
+        <p>Увійди у свій акаунт</p>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                required
+            >
+
+            <button type="submit">
+                Увійти
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

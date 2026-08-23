@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Panel
+{% endblock title %}
+
+{% block content %}
+
+<div class="admin-container">
+
+    <h1>Admin Panel</h1>
+    <p>Керування товарами Sakura House</p>
+
+    <!-- ДОДАВАННЯ ТОВАРУ -->
+
+    <div class="add-product-box">
+
+        <h2>Додати товар</h2>
+
+        <form action="{{ url_for('add_product') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <label>Назва товару</label>
+
+            <input type="text"
+                   name="name"
+                   placeholder="Наприклад: Рамен"
+                   required>
+
+
+            <label>Фото товару</label>
+
+            <input type="file"
+                   name="image"
+                   accept="image/*"
+                   required>
+
+
+            <label>Опис товару</label>
+
+            <textarea name="description"
+                      placeholder="Опис товару..."
+                      required></textarea>
+
+
+            <label>Ціна</label>
+
+            <input type="number"
+                   name="price"
+                   placeholder="250"
+                   step="0.01"
+                   required>
+
+
+            <button type="submit" class="admin-btn">
+                Додати товар
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- СПИСОК ТОВАРІВ -->
+
+    <h2>Товари</h2>
+
+    <div class="products-list">
+
+        {% for product in products %}
+
+        <div class="admin-product">
+
+            {% if product.image_filename %}
+
+                <img src="{{ url_for('static',
+                    filename='images/' + product.image_filename) }}"
+                     alt="{{ product.name }}"
+                     class="admin-product-image">
+
+            {% endif %}
+
+
+            <div class="product-info">
+
+                <h3>{{ product.name }}</h3>
+
+                <p>{{ product.description }}</p>
+
+                <span>{{ product.price }} грн</span>
+
+            </div>
+
+
+            <form action="{{ url_for('delete_product',
+                                     product_id=product.id) }}"
+                  method="POST">
+
+                <button type="submit" class="delete-btn">
+                    Видалити
+                </button>
+
+            </form>
+
+        </div>
+
+        {% else %}
+
+        <p>Товарів поки немає.</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock content %}
