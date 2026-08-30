@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -16,7 +17,10 @@
             Дякуємо за замовлення в Sakura House!
         </p>
 
-        <form method="POST">
+        <form
+            action="{{ url_for('confirm_order') }}"
+            method="POST"
+        >
 
             <input
                 type="text"
@@ -31,8 +35,6 @@
                 placeholder="Номер телефону"
                 required
             >
-
-
 
             <button type="submit">
                 Підтвердити замовлення

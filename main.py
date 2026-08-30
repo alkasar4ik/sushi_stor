@@ -1,4 +1,6 @@
+
 from flask import Flask, render_template, request, redirect, url_for, flash
+
 from flask_login import (
     LoginManager,
     login_user,
@@ -9,8 +11,13 @@ from flask_login import (
 
 from database import Session, Users, Products, Orders
 from sqlalchemy.orm import joinedload
+
+from datetime import datetime, timedelta
+
 import os
 from werkzeug.utils import secure_filename
+
+
 app = Flask(__name__)
 
 app.secret_key = "sakura_house_secret"
@@ -35,6 +42,8 @@ def load_user(user_id):
     return user
 
 
+
+
 def is_admin():
 
     return (
@@ -52,6 +61,9 @@ def admin():
         return redirect(url_for("main"))
 
     return render_template("admin.html")
+
+
+
 
 @app.route("/")
 def main():
@@ -77,14 +89,12 @@ def register():
 
             return redirect(url_for("register"))
 
-
         session = Session()
 
         existing_user = session.query(Users).filter(
             (Users.username == username) |
             (Users.email == email)
         ).first()
-
 
         if existing_user:
 
@@ -94,13 +104,11 @@ def register():
 
             return redirect(url_for("register"))
 
-
         user = Users(
             username=username,
             email=email,
             password=password
         )
-
 
         session.add(user)
 
@@ -108,9 +116,7 @@ def register():
 
         session.close()
 
-
         return redirect(url_for("login"))
-
 
     return render_template("register.html")
 
@@ -123,9 +129,7 @@ def login():
     if request.method == "POST":
 
         username = request.form["username"]
-
         password = request.form["password"]
-
 
         session = Session()
 
@@ -135,16 +139,13 @@ def login():
 
         session.close()
 
-
         if user and user.password == password:
 
             login_user(user)
 
             return redirect(url_for("profile"))
 
-
         flash("Неправильний логін або пароль")
-
 
     return render_template("login.html")
 
@@ -173,11 +174,12 @@ def logout():
 
 
 
-
 @app.route("/menu")
 def menu():
 
     return render_template("menu.html")
+
+
 
 
 @app.route("/admin/add-product", methods=["GET", "POST"])
@@ -200,6 +202,7 @@ def add_product():
         )
 
         with Session() as session:
+
             session.add(new_product)
             session.commit()
 
@@ -216,23 +219,21 @@ def add_to_cart():
 
     product_id = int(request.form["product_id"])
 
-
     session = Session()
-
 
     order = Orders(
         user_id=current_user.id,
         product_id=product_id,
-        quantity=1
+        quantity=1,
+        status="В корзине",
+        created_at=datetime.now()
     )
-
 
     session.add(order)
 
     session.commit()
 
     session.close()
-
 
     return redirect(url_for("cart"))
 
@@ -248,12 +249,14 @@ def cart():
     orders = session.query(Orders).options(
         joinedload(Orders.product)
     ).filter_by(
-        user_id=current_user.id
+        user_id=current_user.id,
+        status="В корзине"
     ).all()
 
     total = 0
 
     for order in orders:
+
         total += order.product.price * order.quantity
 
     session.close()
@@ -263,10 +266,156 @@ def cart():
         orders=orders,
         total=total
     )
+
+
+# =========================
+# REMOVE FROM CART
+# =========================
+
+@app.route(
+    "/remove_from_cart/<int:order_id>",
+    methods=["POST"]
+)
+@login_required
+def remove_from_cart(order_id):
+
+    session = Session()
+
+    order = session.query(Orders).filter_by(
+        id=order_id,
+        user_id=current_user.id,
+        status="В корзине"
+    ).first()
+
+    if order:
+
+        session.delete(order)
+
+        session.commit()
+
+    session.close()
+
+    return redirect(url_for("cart"))
+
+
+
+
 @app.route("/payment")
 @login_required
 def payment():
-    return render_template("payment.html")
+
+    session = Session()
+
+    orders = session.query(Orders).options(
+        joinedload(Orders.product)
+    ).filter_by(
+        user_id=current_user.id,
+        status="В корзине"
+    ).all()
+
+    total = 0
+
+    for order in orders:
+
+        total += order.product.price * order.quantity
+
+    session.close()
+
+    if not orders:
+
+        flash("Корзина пуста")
+
+        return redirect(url_for("cart"))
+
+    return render_template(
+        "payment.html",
+        orders=orders,
+        total=total
+    )
+
+
+
+
+@app.route("/confirm_order", methods=["POST"])
+@login_required
+def confirm_order():
+
+    session = Session()
+
+    orders = session.query(Orders).filter_by(
+        user_id=current_user.id,
+        status="В корзине"
+    ).all()
+
+    if not orders:
+
+        session.close()
+
+        flash("Корзина пуста")
+
+        return redirect(url_for("cart"))
+
+
+    for order in orders:
+
+        order.status = "В обработке"
+        order.created_at = datetime.now()
+
+    session.commit()
+
+    session.close()
+
+    flash("Заказ успешно оформлен!")
+
+    return redirect(url_for("order_history"))
+
+
+
+
+@app.route("/orders")
+@login_required
+def order_history():
+
+    session = Session()
+
+    orders = session.query(Orders).options(
+        joinedload(Orders.product)
+    ).filter(
+        Orders.user_id == current_user.id,
+        Orders.status != "В корзине"
+    ).order_by(
+        Orders.created_at.desc()
+    ).all()
+
+
+    changed = False
+
+    for order in orders:
+
+        if order.status == "В обробці":
+
+            time_passed = datetime.now() - order.created_at
+
+            if time_passed >= timedelta(minutes=5):
+
+                order.status = "Отправлено"
+
+                changed = True
+
+    if changed:
+
+        session.commit()
+
+    session.close()
+
+    return render_template(
+        "orders.html",
+        orders=orders
+    )
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+

@@ -41,6 +41,16 @@
                         Кількість: {{ order.quantity }}
                     </span>
 
+                    <!-- КНОПКА ВИДАЛЕННЯ -->
+                    <form
+                        action="{{ url_for('remove_from_cart', order_id=order.id) }}"
+                        method="POST"
+                    >
+                        <button type="submit" class="remove-btn">
+                            Видалити
+                        </button>
+                    </form>
+
                 </div>
 
             </div>
