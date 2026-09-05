@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+Профіль | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            🌸
+        </div>
+
+        <h1>{{ user.username }}</h1>
+
+        <p class="profile-subtitle">
+            Sakura House member
+        </p>
+
+        <div class="profile-info">
+
+            <div class="profile-row">
+                <span>USERNAME</span>
+                <strong>{{ user.username }}</strong>
+            </div>
+
+            <div class="profile-row">
+                <span>EMAIL</span>
+                <strong>{{ user.email }}</strong>
+            </div>
+
+            <div class="profile-row">
+                <span>USER ID</span>
+                <strong>#{{ user.id }}</strong>
+            </div>
+
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="logout-button">
+            Вийти з акаунта
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

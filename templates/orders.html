@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}
+Мої замовлення | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="orders-page">
+
+    <h1>📦 Мої замовлення</h1>
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-header">
+
+                    <h2>
+                        Замовлення №{{ order.id }}
+                    </h2>
+
+                    {% if order.status == "В обробці" %}
+
+                        <span class="order-status processing">
+                            🕐 В обробці
+                        </span>
+
+                    {% elif order.status == "Відправлено" %}
+
+                        <span class="order-status sent">
+                            🚚 Відправлено
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="order-product">
+
+                    <img
+                        src="{{ url_for('static', filename='images/' + order.product.image) }}"
+                        alt="{{ order.product.name }}"
+                    >
+
+                    <div>
+
+                        <h3>
+                            {{ order.product.name }}
+                        </h3>
+
+                        <p>
+                            Кількість: {{ order.quantity }}
+                        </p>
+
+                        <p>
+                            Ціна: {{ order.product.price }} грн
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-date">
+
+                    Замовлення створено:
+                    {{ order.created_at.strftime("%d.%m.%Y %H:%M") }}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <h2>У тебе ще немає замовлень 📦</h2>
+
+            <p>
+                Саме час замовити щось смачненьке!
+            </p>
+
+            <a href="{{ url_for('menu') }}">
+                Перейти до меню
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

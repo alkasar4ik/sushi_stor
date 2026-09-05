@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+Реєстрація | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="register-page">
+
+    <div class="register-card">
+
+        <h1>Реєстрація 🌸</h1>
+
+        <p>Створи свій акаунт Sakura House</p>
+
+        <form method="POST">
+
+            <input type="text"
+                   name="username"
+                   placeholder="Ім'я користувача"
+                   required>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Email"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Пароль"
+                   required>
+
+            <input type="password"
+                   name="password2"
+                   placeholder="Повторіть пароль"
+                   required>
+
+            <button type="submit">
+                Зареєструватися
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

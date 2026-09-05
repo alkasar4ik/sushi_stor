@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}
+Меню | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="menu-page">
+
+    <h1>Sakura House 🌸</h1>
+
+    <p class="menu-subtitle">
+        Японська кухня з любов'ю
+    </p>
+
+
+
+
+    <div class="menu-categories">
+
+        <button class="category-btn active"
+                onclick="filterMenu('all', this)">
+            Все
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('sushi', this)">
+            Суші
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('sets', this)">
+            Сети
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('ramen', this)">
+            Рамен
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('main', this)">
+            Основні
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('snacks', this)">
+            Закуски
+        </button>
+
+        <button class="category-btn"
+                onclick="filterMenu('drinks', this)">
+            Напої
+        </button>
+
+    </div>
+
+
+
+
+    <div class="products-grid">
+
+        {% for product in products %}
+
+        <div class="product-card"
+             data-category="{{ product.category }}">
+
+            {% if product.image %}
+
+            <img
+                src="{{ url_for('static', filename='images/' + product.image) }}"
+                alt="{{ product.name }}"
+            >
+
+            {% endif %}
+
+            <div class="product-info">
+
+                <h3>{{ product.name }}</h3>
+
+                <p>
+                    {{ product.description }}
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="price">
+                        {{ product.price }} грн
+                    </span>
+
+                    <form method="POST"
+                          action="{{ url_for('add_to_cart') }}">
+
+                        <input
+                            type="hidden"
+                            name="product_id"
+                            value="{{ product.id }}"
+                        >
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <p>Товарів поки немає.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<script>
+
+function filterMenu(category, button) {
+
+    const products = document.querySelectorAll(".product-card");
+    const buttons = document.querySelectorAll(".category-btn");
+
+    buttons.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    products.forEach(product => {
+
+        if (
+            category === "all" ||
+            product.dataset.category === category
+        ) {
+
+            product.style.display = "block";
+
+        } else {
+
+            product.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+Оплата | Sakura House
+{% endblock %}
+
+{% block content %}
+
+<section class="payment-page">
+
+    <div class="payment-card">
+
+        <h1>🌸 Оформлення замовлення</h1>
+
+        <p>
+            Дякуємо за замовлення в Sakura House!
+        </p>
+
+        <form
+            action="{{ url_for('confirm_order') }}"
+            method="POST"
+        >
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Ваше ім'я"
+                required
+            >
+
+            <input
+                type="text"
+                name="phone"
+                placeholder="Номер телефону"
+                required
+            >
+
+            <button type="submit">
+                Підтвердити замовлення
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}
